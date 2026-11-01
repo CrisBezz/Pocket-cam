@@ -143,7 +143,8 @@ reconnectTimer=setTimeout(()=>{reconnectTimer=null;if(epoch===viewerEpoch&&viewe
 const connectViewer=(id,retry=false)=>{
 if(!window.Peer){tell('PeerJS library failed to load.');return;}
 const preserved=el('autoWatchInput').value;
-clean();viewerTarget=id;intentionalStop=false;const epoch=viewerEpoch;
+const attempts=retryCount;
+clean();retryCount=retry?attempts:0;viewerTarget=id;intentionalStop=false;const epoch=viewerEpoch;
 watchUI();el('autoWatchInput').value=preserved;
 peer=makePeer();
 let receivedVideo=false;
