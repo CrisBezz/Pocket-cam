@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.7.2</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.7.3</title>
 <style>
 :root{font-family:system-ui,-apple-system,sans-serif;color-scheme:dark;background:#0d1420;color:#edf4ff}*{box-sizing:border-box}body{margin:auto;padding:20px;max-width:850px}header{margin-bottom:18px}h1{font-size:26px;margin:0}p{line-height:1.5;color:#b6c3d8}nav{display:flex;gap:10px;margin-bottom:14px}button{background:#263955;color:white;border:1px solid #506380;border-radius:10px;padding:11px 14px;font-weight:600;cursor:pointer}button.primary,nav button.active{background:#247fdb;border-color:#247fdb}nav button{flex:1}section{border-radius:16px;padding:15px;border:1px solid #344760;background:#182337}video{width:100%;aspect-ratio:16/9;object-fit:contain;background:black;border-radius:10px}label{display:block;margin:16px 0 6px;font-weight:600;font-size:13px}textarea{width:100%;height:108px;padding:9px;background:#101a2a;color:#e6f2ff;border:1px solid #3a5274;border-radius:8px;font-size:12px;resize:vertical}.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}#status{padding:12px;border-radius:9px;background:#253650;white-space:pre-wrap;margin-top:16px}.hidden{display:none}small{font-size:12px;color:#a4b3c9}
-</style></head><body><header><h1>📷 Pocket-Cam <small>v0.7.2</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
+</style></head><body><header><h1>📷 Pocket-Cam <small>v0.7.3</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
 <style>
 .auto-panel{border:1px solid #247fdb;background:#12253e;border-radius:16px;padding:15px;margin-bottom:15px}#cameraSettings{margin:12px 0;padding:12px;background:#1c304b;border-radius:10px}#cameraSettings select{width:100%;padding:10px;border-radius:8px;border:1px solid #456383;background:#101a2a;color:#fff}#cameraSettings .mic-toggle{display:flex;align-items:center;gap:8px}#cameraSettings .mic-toggle input{width:20px;height:20px}.auto-panel h2{margin:0 0 5px;font-size:19px}.auto-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.auto-actions button{flex:1;min-width:140px}.auto-panel input{display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #456383;border-radius:9px;background:#101a2a;color:white;font-size:16px;margin:10px 0}.auto-panel a{color:#9acaff;overflow-wrap:anywhere}.auto-panel .mini{font-size:12px;color:#b6c3d8}.auto-panel video{margin-top:10px}details{margin:12px 0}summary{cursor:pointer;color:#b6d9ff}
 .viewer-stats{padding:8px 10px;background:#17283e;border:1px solid #354e69;border-radius:8px;margin-top:8px;font-size:12px;color:#c2d9ef;font-variant-numeric:tabular-nums}#autoVideo.viewer-fill{object-fit:cover}#autoVideo:fullscreen{width:100vw;height:100vh;object-fit:contain;border-radius:0;background:#000}#autoVideo.viewer-fill:fullscreen{object-fit:cover}body.pocket-cinema{max-width:none;padding:0;background:#000}body.pocket-cinema>header,body.pocket-cinema>nav,body.pocket-cinema>details,body.pocket-cinema>#status,body.pocket-cinema>p{display:none}body.pocket-cinema #autoPanel{border:0;border-radius:0;padding:8px;background:#000}body.pocket-cinema #autoPanel>h2,body.pocket-cinema #autoPanel>p,body.pocket-cinema #autoPanel>.auto-actions,body.pocket-cinema #autoWatch>label,body.pocket-cinema #autoWatch>input,body.pocket-cinema #autoWatch>.auto-actions:first-of-type{display:none}body.pocket-cinema #autoVideo{height:calc(100dvh - 58px);aspect-ratio:auto;width:100%;object-fit:contain}body.pocket-cinema #autoVideo.viewer-fill{object-fit:cover}body.pocket-cinema #autoWatch>.auto-actions:last-of-type{justify-content:center;margin:5px 0}
@@ -198,7 +198,6 @@ viewerConnection.on('close',()=>scheduleRetry('Connection closed',epoch));
 });
 peer.on('call',call=>{
 if(epoch!==viewerEpoch){call.close();return;}
-if(activeCall&&activeCall!==call)activeCall.close();
 if(call.metadata?.pocketMedia==='audio'){
 if(incomingAudioCall&&incomingAudioCall!==call)incomingAudioCall.close();
 incomingAudioCall=call;
@@ -211,6 +210,7 @@ else tell('Microphone track received. Tap Enable sound on the viewer.');
 call.on('close',()=>{if(incomingAudioCall===call){incomingAudioCall=null;el('audioPlayer').srcObject=null;soundInfo();}});
 call.answer();return;
 }
+if(activeCall&&activeCall!==call)activeCall.close();
 activeCall=call;
 call.on('stream',s=>{
 if(epoch!==viewerEpoch)return;
