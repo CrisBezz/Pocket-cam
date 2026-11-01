@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.7.1</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.7.2</title>
 <style>
 :root{font-family:system-ui,-apple-system,sans-serif;color-scheme:dark;background:#0d1420;color:#edf4ff}*{box-sizing:border-box}body{margin:auto;padding:20px;max-width:850px}header{margin-bottom:18px}h1{font-size:26px;margin:0}p{line-height:1.5;color:#b6c3d8}nav{display:flex;gap:10px;margin-bottom:14px}button{background:#263955;color:white;border:1px solid #506380;border-radius:10px;padding:11px 14px;font-weight:600;cursor:pointer}button.primary,nav button.active{background:#247fdb;border-color:#247fdb}nav button{flex:1}section{border-radius:16px;padding:15px;border:1px solid #344760;background:#182337}video{width:100%;aspect-ratio:16/9;object-fit:contain;background:black;border-radius:10px}label{display:block;margin:16px 0 6px;font-weight:600;font-size:13px}textarea{width:100%;height:108px;padding:9px;background:#101a2a;color:#e6f2ff;border:1px solid #3a5274;border-radius:8px;font-size:12px;resize:vertical}.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}#status{padding:12px;border-radius:9px;background:#253650;white-space:pre-wrap;margin-top:16px}.hidden{display:none}small{font-size:12px;color:#a4b3c9}
-</style></head><body><header><h1>📷 Pocket-Cam <small>v0.7.1</small></h1><p>One iPhone camera, one browser viewer. Private peer-to-peer WebRTC streaming.</p></header>
+</style></head><body><header><h1>📷 Pocket-Cam <small>v0.7.2</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
 <style>
 .auto-panel{border:1px solid #247fdb;background:#12253e;border-radius:16px;padding:15px;margin-bottom:15px}#cameraSettings{margin:12px 0;padding:12px;background:#1c304b;border-radius:10px}#cameraSettings select{width:100%;padding:10px;border-radius:8px;border:1px solid #456383;background:#101a2a;color:#fff}#cameraSettings .mic-toggle{display:flex;align-items:center;gap:8px}#cameraSettings .mic-toggle input{width:20px;height:20px}.auto-panel h2{margin:0 0 5px;font-size:19px}.auto-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.auto-actions button{flex:1;min-width:140px}.auto-panel input{display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #456383;border-radius:9px;background:#101a2a;color:white;font-size:16px;margin:10px 0}.auto-panel a{color:#9acaff;overflow-wrap:anywhere}.auto-panel .mini{font-size:12px;color:#b6c3d8}.auto-panel video{margin-top:10px}details{margin:12px 0}summary{cursor:pointer;color:#b6d9ff}
 .viewer-stats{padding:8px 10px;background:#17283e;border:1px solid #354e69;border-radius:8px;margin-top:8px;font-size:12px;color:#c2d9ef;font-variant-numeric:tabular-nums}#autoVideo.viewer-fill{object-fit:cover}#autoVideo:fullscreen{width:100vw;height:100vh;object-fit:contain;border-radius:0;background:#000}#autoVideo.viewer-fill:fullscreen{object-fit:cover}body.pocket-cinema{max-width:none;padding:0;background:#000}body.pocket-cinema>header,body.pocket-cinema>nav,body.pocket-cinema>details,body.pocket-cinema>#status,body.pocket-cinema>p{display:none}body.pocket-cinema #autoPanel{border:0;border-radius:0;padding:8px;background:#000}body.pocket-cinema #autoPanel>h2,body.pocket-cinema #autoPanel>p,body.pocket-cinema #autoPanel>.auto-actions,body.pocket-cinema #autoWatch>label,body.pocket-cinema #autoWatch>input,body.pocket-cinema #autoWatch>.auto-actions:first-of-type{display:none}body.pocket-cinema #autoVideo{height:calc(100dvh - 58px);aspect-ratio:auto;width:100%;object-fit:contain}body.pocket-cinema #autoVideo.viewer-fill{object-fit:cover}body.pocket-cinema #autoWatch>.auto-actions:last-of-type{justify-content:center;margin:5px 0}
-</style><div class="auto-panel" id="autoPanel"><h2>Quick Pair · Experimental</h2><p>No offer/answer copying. Start on iPhone, then open its private viewer link on iPad or PC.</p>
-<div class="auto-actions"><button class="primary" id="autoStart">📱 Start camera & create link</button><button id="autoStop">Stop broadcast</button></div>
-<div id="cameraSettings"><label for="camFacing">Camera</label><select id="camFacing"><option value="environment">Rear</option><option value="user">Front</option></select><label for="camResolution">Resolution (requested)</label><select id="camResolution"><option value="720">720p</option><option value="480">480p</option><option value="1080">1080p</option></select><label class="mic-toggle"><input type="checkbox" id="camMic"> Include microphone audio (requires permission)</label><p class="mini" id="cameraInfo">Applies when broadcasting starts; camera and resolution can also change live.</p></div><div id="autoShare" hidden><label>Viewer link (treat as private)</label><input id="autoLink" readonly><div class="auto-actions"><button id="autoCopy">Copy viewer link</button><button id="autoShareButton">Share link</button></div></div>
-<div id="autoWatch" hidden><label>Open a viewer link or paste it here</label><input id="autoWatchInput" placeholder="Paste complete link or camera ID"><div class="auto-actions"><button class="primary" id="autoJoin">▶ Watch camera</button></div><video id="autoVideo" autoplay playsinline controls></video><audio id="audioPlayer" autoplay playsinline></audio><p class="mini" id="soundStatus">Sound off until enabled. Turn on the iPhone microphone and tap Enable sound here.</p><div id="autoStats" class="viewer-stats" aria-live="off">Awaiting stream…</div><div class="auto-actions"><button id="autoFullscreen">⛶ Fullscreen viewer</button><button id="autoFit">↔ Fit: Contain</button><button id="autoDisconnect">Disconnect viewer</button><button id="autoReconnect">↻ Reconnect</button><button id="autoSound">🔊 Enable sound</button><button id="autoSnapshot">📸 Save snapshot</button><button id="autoStatsToggle">📊 Statistics: On</button></div></div>
-<div class="auto-actions"><button id="autoViewerMode">🖥️ Watch a camera</button></div><p class="mini" id="autoStatus">Quick Pair uses the free public PeerJS signalling service and Google STUN; video is direct peer-to-peer where possible. No TURN relay is configured, so some networks won't connect. The private link is your access key; don't share it publicly.</p></div>
-<details><summary>Manual pairing fallback (v0.1)</summary><div id="manualContainer"></div></details><nav><button class="active" id="camTab">📱 iPhone camera</button><button id="viewTab">🖥️ PC viewer</button></nav>
+</style><div class="auto-panel" id="autoPanel"><h2>Quick Pair · Experimental</h2><p>No offer/answer copying. Start on the broadcasting device, then open its private viewer link on another device.</p>
+<div class="auto-actions"><button class="primary" id="autoStart">📷 Broadcast camera & create link</button><button id="autoStop">Stop broadcast</button></div>
+<div id="cameraSettings"><label for="camFacing">Camera</label><select id="camFacing"><option value="environment">Rear</option><option value="user">Front</option></select><label for="camResolution">Resolution (requested)</label><select id="camResolution"><option value="720">720p</option><option value="480">480p</option><option value="1080">1080p</option></select><label class="mic-toggle"><input type="checkbox" id="camMic"> Include microphone audio (requires permission)</label><p class="mini" id="micDiagnostic" role="status">Microphone off. Tick to request microphone access when broadcasting.</p><p class="mini" id="cameraInfo">Applies when broadcasting starts; camera and resolution can also change live.</p></div><div id="autoShare" hidden><label>Viewer link (treat as private)</label><input id="autoLink" readonly><div class="auto-actions"><button id="autoCopy">Copy viewer link</button><button id="autoShareButton">Share link</button></div></div>
+<div id="autoWatch" hidden><label>Open a viewer link or paste it here</label><input id="autoWatchInput" placeholder="Paste complete link or camera ID"><div class="auto-actions"><button class="primary" id="autoJoin">▶ Watch camera</button></div><video id="autoVideo" autoplay playsinline controls></video><audio id="audioPlayer" autoplay playsinline></audio><p class="mini" id="soundStatus">Sound off until enabled. Turn on the broadcasting device microphone and tap Enable sound here.</p><div id="autoStats" class="viewer-stats" aria-live="off">Awaiting stream…</div><div class="auto-actions"><button id="autoFullscreen">⛶ Fullscreen viewer</button><button id="autoFit">↔ Fit: Contain</button><button id="autoDisconnect">Disconnect viewer</button><button id="autoReconnect">↻ Reconnect</button><button id="autoSound">🔊 Enable sound</button><button id="autoSnapshot">📸 Save snapshot</button><button id="autoStatsToggle">📊 Statistics: On</button></div></div>
+<div class="auto-actions"><button id="autoViewerMode">👁️ Watch a camera</button></div><p class="mini" id="autoStatus">Quick Pair uses the free public PeerJS signalling service and Google STUN; video is direct peer-to-peer where possible. No TURN relay is configured, so some networks won't connect. The private link is your access key; don't share it publicly.</p></div>
+<details><summary>Manual pairing fallback (v0.1)</summary><div id="manualContainer"></div></details><nav><button class="active" id="camTab">📷 Broadcast camera</button><button id="viewTab">👁️ Watch camera</button></nav>
 <section id="cam"><video id="preview" autoplay muted playsinline></video><div class="controls"><button class="primary" id="start">1. Start camera</button><button id="stop">Stop</button></div><label>2. Copy camera offer to PC</label><textarea id="offerOut" readonly placeholder="Offer will appear here"></textarea><div class="controls"><button id="copyOffer">Copy offer</button></div><label>4. Paste viewer answer from PC</label><textarea id="answerIn" placeholder="Paste the viewer answer here"></textarea><div class="controls"><button class="primary" id="connect">5. Connect</button></div></section>
 <section id="viewer" class="hidden"><video id="remote" autoplay playsinline controls></video><label>2. Paste camera offer from iPhone</label><textarea id="offerIn" placeholder="Paste the camera offer here"></textarea><div class="controls"><button class="primary" id="answer">3. Create answer</button></div><label>3. Copy viewer answer to iPhone</label><textarea id="answerOut" readonly placeholder="Answer will appear here"></textarea><div class="controls"><button id="copyAnswer">Copy answer</button><button id="play">Play video</button></div></section>
 <div id="status" role="status">Ready. Keep the iPhone unlocked and Safari in the foreground.</div>
@@ -40,6 +40,16 @@ $('copyOffer').onclick=()=>copy('offerOut');$('copyAnswer').onclick=()=>copy('an
 const el=id=>document.getElementById(id), tell=s=>el('autoStatus').textContent=s;
 let peer=null, camera=null, viewerConnection=null, activeCall=null, cameraConnections=[], cameraChanging=false, micCall=null, incomingAudioCall=null, reconnectTimer=null, retryCount=0, viewerTarget=null, intentionalStop=false, viewerEpoch=0;
 const params=new URLSearchParams(location.search);
+const micDiagnostic=s=>{el('micDiagnostic').textContent=s;};
+const micError=e=>{
+const kind=e?.name||'Error',message=e?.message||String(e);
+micDiagnostic('Microphone '+kind+': '+message);
+tell('Microphone '+kind+': '+message);
+};
+const getMicrophone=async()=>{
+try{return await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:false});}
+catch(e){if(e?.name==='OverconstrainedError'||e?.name==='NotFoundError'){return await navigator.mediaDevices.getUserMedia({audio:true,video:false});}throw e;}
+};
 const videoConstraints=()=>{const height=Number(el('camResolution').value);return {facingMode:{ideal:el('camFacing').value},width:{ideal:Math.round(height*16/9)},height:{ideal:height}};};
 const cameraReport=()=>{if(!camera)return;const t=camera.getVideoTracks()[0];if(t){const s=t.getSettings();el('cameraInfo').textContent='Active: '+(s.width||'?')+'×'+(s.height||'?')+' · '+(s.facingMode||'camera')+(camera.getAudioTracks().length?' · microphone on':' · microphone off');}};
 const restartCall=()=>{
@@ -67,12 +77,19 @@ finally{cameraChanging=false;el('camFacing').disabled=false;el('camResolution').
 };
 el('camFacing').onchange=changeCamera;el('camResolution').onchange=changeCamera;
 el('camMic').onchange=async()=>{
-if(!camera)return;
+if(!camera){micDiagnostic(el('camMic').checked?'Microphone requested for the next broadcast.':'Microphone disabled for the next broadcast.');return;}
+el('camMic').disabled=true;
 try{
-if(el('camMic').checked){const audio=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:false});audio.getAudioTracks().forEach(t=>camera.addTrack(t));}
-else{camera.getAudioTracks().forEach(t=>{camera.removeTrack(t);t.stop();});}
+if(el('camMic').checked){
+if(!camera.getAudioTracks().length){
+const audio=await getMicrophone();
+audio.getAudioTracks().forEach(t=>camera.addTrack(t));
+}
+}else{camera.getAudioTracks().forEach(t=>{camera.removeTrack(t);t.stop();});}
 restartCall();cameraReport();
-}catch(e){el('camMic').checked=false;tell('Microphone unavailable: '+e.message);}
+micDiagnostic(el('camMic').checked?'Microphone captured: '+camera.getAudioTracks().length+' active audio track(s).':'Microphone disabled.');
+}catch(e){el('camMic').checked=camera.getAudioTracks().length>0;micError(e);}
+finally{el('camMic').disabled=false;}
 };
 const cancelRetries=()=>{if(reconnectTimer){clearTimeout(reconnectTimer);reconnectTimer=null;}retryCount=0;};
 const clean=()=>{viewerEpoch++;cancelRetries();viewerTarget=null;if(typeof stopStats==='function')stopStats();document.body.classList.remove('pocket-cinema');if(activeCall){activeCall.close();activeCall=null;}if(micCall){micCall.close();micCall=null;}if(incomingAudioCall){incomingAudioCall.close();incomingAudioCall=null;}el('audioPlayer').srcObject=null;for(const c of cameraConnections){try{c.close()}catch{}}cameraConnections=[];if(viewerConnection){viewerConnection.close();viewerConnection=null;}if(peer){peer.destroy();peer=null;}if(camera){camera.getTracks().forEach(t=>t.stop());camera=null;}el('autoShare').hidden=true;el('autoVideo').srcObject=null;el('soundStatus').textContent='No microphone track received.';};
@@ -80,7 +97,7 @@ const makePeer=(id)=>new window.Peer(id||undefined,{config:{iceServers:[{urls:'s
 const watchUI=()=>{el('autoWatch').hidden=false;el('autoShare').hidden=true;};
 let soundEnabled=false;let cinema=false, fill=false, statsEnabled=true, statsTimer=null, lastBytes=null, lastTime=null;
 const statsEl=el('autoStats');
-const soundInfo=()=>{const tracks=el('audioPlayer').srcObject?.getAudioTracks()||[];el('soundStatus').textContent=tracks.length?(soundEnabled?'Microphone track received · sound enabled':'Microphone track received · tap Enable sound'):'No microphone track received. On iPhone, enable Include microphone audio before broadcast or toggle it while connected.';};
+const soundInfo=()=>{const tracks=el('audioPlayer').srcObject?.getAudioTracks()||[];el('soundStatus').textContent=tracks.length?(soundEnabled?'Microphone track received · sound enabled':'Microphone track received · tap Enable sound'):'No microphone track received. On the broadcasting device, enable Include microphone audio before broadcast or toggle it while connected.';};
 const applySound=async()=>{const video=el('audioPlayer');video.muted=!soundEnabled;video.volume=1;el('autoSound').textContent=soundEnabled?'🔇 Mute sound':'🔊 Enable sound';soundInfo();if(soundEnabled&&video.srcObject){try{await video.play();tell('Audio playback enabled.');}catch(e){tell('Playback blocked: tap the video Play control. '+e.message);}}};
 el('autoSound').onclick=()=>{soundEnabled=!soundEnabled;applySound();};
 const stopStats=()=>{if(statsTimer){clearInterval(statsTimer);statsTimer=null;}lastBytes=null;lastTime=null;};
@@ -126,7 +143,14 @@ try{
 if(!window.Peer)throw Error('PeerJS library failed to load. Check internet connection.');
 clean();el('autoWatch').hidden=true;
 if(!navigator.mediaDevices?.getUserMedia)throw Error('Camera access requires HTTPS.');
-camera=await navigator.mediaDevices.getUserMedia({video:videoConstraints(),audio:el('camMic').checked?{echoCancellation:true,noiseSuppression:true}:false});cameraReport();
+camera=await navigator.mediaDevices.getUserMedia({video:videoConstraints(),audio:false});
+if(el('camMic').checked){
+try{
+const audio=await getMicrophone();audio.getAudioTracks().forEach(t=>camera.addTrack(t));
+micDiagnostic('Microphone captured: '+camera.getAudioTracks().length+' active audio track(s).');
+}catch(e){el('camMic').checked=false;micError(e);}
+}
+cameraReport();
 el('preview').srcObject=camera;
 peer=makePeer();
 peer.on('open',id=>{
