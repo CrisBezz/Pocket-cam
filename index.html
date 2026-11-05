@@ -130,8 +130,8 @@ const next=await navigator.mediaDevices.getUserMedia({video:videoConstraints(),a
 const newTrack=next.getVideoTracks()[0],oldTrack=camera.getVideoTracks()[0];
 if(activeCall?.peerConnection){const sender=activeCall.peerConnection.getSenders().find(s=>s.track?.kind==='video');if(sender)await sender.replaceTrack(newTrack);}
 camera.removeTrack(oldTrack);camera.addTrack(newTrack);oldTrack.stop();el('preview').srcObject=camera;cameraReport();
-tell('Camera updated. Existing viewer connection retained.');reportRemoteState(approvedViewer);
-}catch(e){tell('Camera change failed: '+e.message);}
+tell('Camera updated. Existing viewer connection retained.');reportRemoteState(approvedViewer);return true;
+}catch(e){tell('Camera change failed: '+e.message);return false;}
 finally{cameraChanging=false;el('camFacing').disabled=false;el('camResolution').disabled=false;}
 };
 el('camFacing').onchange=changeCamera;el('camResolution').onchange=changeCamera;
@@ -274,10 +274,10 @@ const result=(ok,message)=>{if(conn.open)conn.send({type:'pocket-command-result'
 try{
 if(data.control==='facing'){
 if(!['environment','user'].includes(data.value))throw Error('Invalid camera selection');
-el('camFacing').value=data.value;await changeCamera();
+el('camFacing').value=data.value;if(await changeCamera()!==true)throw Error('Camera change failed on broadcaster');
 }else if(data.control==='resolution'){
 if(!['480','720','1080'].includes(data.value))throw Error('Unsupported resolution selection');
-el('camResolution').value=data.value;await changeCamera();
+el('camResolution').value=data.value;if(await changeCamera()!==true)throw Error('Resolution change failed on broadcaster');
 }else if(data.control==='microphone'){
 if(typeof data.value!=='boolean')throw Error('Invalid microphone value');
 el('camMic').checked=data.value;await el('camMic').onchange();
