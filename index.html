@@ -210,33 +210,53 @@ const resetCrop=()=>{crop.scale=1;crop.x=0;crop.y=0;crop.targeting=false;crop.dr
 el('digitalZoom').oninput=()=>{crop.scale=Number(el('digitalZoom').value);renderCrop();};
 el('digitalReset').onclick=resetCrop;
 el('targetMode').onclick=()=>{crop.targeting=!crop.targeting;crop.drag=null;renderCrop();};
+const pinchMeasure=()=>{
+const pts=[...crop.activePointers.values()];
+return pts.length<2?null:{distance:Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y),centreX:(pts[0].x+pts[1].x)/2,centreY:(pts[0].y+pts[1].y)/2};
+};
+let pinchBase=null;
 panSurface.addEventListener('pointerdown',e=>{
 if(!crop.targeting)return;
 e.preventDefault();panSurface.setPointerCapture(e.pointerId);
 crop.activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+if(crop.activePointers.size===1){
 crop.drag={id:e.pointerId,startX:e.clientX,startY:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};
+}else if(crop.activePointers.size===2){
+crop.drag=null;const m=pinchMeasure();pinchBase={...m,scale:crop.scale,x:crop.x,y:crop.y};
+}
 });
 panSurface.addEventListener('pointermove',e=>{
-if(!crop.targeting||!crop.activePointers.has(e.pointerId)||!crop.drag||crop.drag.id!==e.pointerId)return;
+if(!crop.targeting||!crop.activePointers.has(e.pointerId))return;
 e.preventDefault();
-const dx=e.clientX-crop.drag.lastX,dy=e.clientY-crop.drag.lastY;
+const prev=crop.activePointers.get(e.pointerId);
+crop.activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+if(crop.activePointers.size>=2&&pinchBase){
+const m=pinchMeasure();
+const next=Math.max(1,Math.min(4,pinchBase.scale*m.distance/Math.max(1,pinchBase.distance)));
+crop.scale=next;
+crop.x=pinchBase.x+(m.centreX-pinchBase.centreX);
+crop.y=pinchBase.y+(m.centreY-pinchBase.centreY);
+renderCrop();return;
+}
+if(!crop.drag||crop.drag.id!==e.pointerId)return;
 if(Math.abs(e.clientX-crop.drag.startX)+Math.abs(e.clientY-crop.drag.startY)>8)crop.drag.moved=true;
-if(crop.drag.moved&&crop.scale>1){crop.x+=dx;crop.y+=dy;renderCrop();}
+if(crop.drag.moved&&crop.scale>1){crop.x+=e.clientX-prev.x;crop.y+=e.clientY-prev.y;renderCrop();}
 crop.drag.lastX=e.clientX;crop.drag.lastY=e.clientY;
 });
 const endPan=e=>{
 if(!crop.activePointers.has(e.pointerId))return;
 crop.activePointers.delete(e.pointerId);
+if(crop.activePointers.size<2)pinchBase=null;
 if(crop.targeting&&crop.drag?.id===e.pointerId&&!crop.drag.moved&&crop.scale>1){
 const rect=panSurface.getBoundingClientRect();
-// Tap makes the selected point the centre of the cropped viewport.
 crop.x+=rect.left+rect.width/2-e.clientX;
 crop.y+=rect.top+rect.height/2-e.clientY;
 renderCrop();
 }
 crop.drag=null;
 };
-panSurface.addEventListener('pointerup',endPan);panSurface.addEventListener('pointercancel',e=>{crop.activePointers.delete(e.pointerId);crop.drag=null;});
+panSurface.addEventListener('pointerup',endPan);
+panSurface.addEventListener('pointercancel',e=>{crop.activePointers.delete(e.pointerId);crop.drag=null;pinchBase=null;});
 const statsEl=el('autoStats');
 const soundInfo=()=>{const tracks=el('audioPlayer').srcObject?.getAudioTracks()||[];el('soundStatus').textContent=tracks.length?(soundEnabled?'Microphone track received · sound enabled':'Microphone track received · tap Enable sound'):'No microphone track received. On the broadcasting device, enable Include microphone audio before broadcast or toggle it while connected.';};
 const applySound=async()=>{const video=el('audioPlayer');video.muted=!soundEnabled;video.volume=1;el('autoSound').textContent=soundEnabled?'🔇 Mute sound':'🔊 Enable sound';soundInfo();if(soundEnabled&&video.srcObject){try{await video.play();tell('Audio playback enabled.');}catch(e){tell('Playback blocked: tap the video Play control. '+e.message);}}};
