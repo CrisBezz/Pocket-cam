@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.9.2</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.10.0</title>
 <style>
 :root{font-family:system-ui,-apple-system,sans-serif;color-scheme:dark;background:#0d1420;color:#edf4ff}*{box-sizing:border-box}body{margin:auto;padding:20px;max-width:850px}header{margin-bottom:18px}h1{font-size:26px;margin:0}p{line-height:1.5;color:#b6c3d8}nav{display:flex;gap:10px;margin-bottom:14px}button{background:#263955;color:white;border:1px solid #506380;border-radius:10px;padding:11px 14px;font-weight:600;cursor:pointer}button.primary,nav button.active{background:#247fdb;border-color:#247fdb}nav button{flex:1}section{border-radius:16px;padding:15px;border:1px solid #344760;background:#182337}video{width:100%;aspect-ratio:16/9;object-fit:contain;background:black;border-radius:10px}label{display:block;margin:16px 0 6px;font-weight:600;font-size:13px}textarea{width:100%;height:108px;padding:9px;background:#101a2a;color:#e6f2ff;border:1px solid #3a5274;border-radius:8px;font-size:12px;resize:vertical}.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}#status{padding:12px;border-radius:9px;background:#253650;white-space:pre-wrap;margin-top:16px}.hidden{display:none}small{font-size:12px;color:#a4b3c9}
 #screenGuard{position:fixed;inset:0;background:#000;color:#9ca3af;z-index:100000;display:block;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;text-align:center;user-select:none;-webkit-user-select:none;scrollbar-width:none}#screenGuard::-webkit-scrollbar{display:none}#guardBlank{height:calc(100dvh + 100px);min-height:calc(100vh + 100px);background:#000}#guardBottom{min-height:70dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px 20px 100px;background:#000}#screenGuard[hidden]{display:none}#screenGuard .live{color:#f87171;font-size:13px;letter-spacing:0.15em}#screenGuard button{background:#131313;border:1px solid #3d3d3d;touch-action:none;min-width:185px}#guardProgress{color:#737373;font-size:12px}
-</style></head><body><header><h1>📷 Pocket-Cam <small>v0.9.2</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
+</style></head><body><header><h1>📷 Pocket-Cam <small>v0.10.0</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
 <style>
 .auto-panel{border:1px solid #247fdb;background:#12253e;border-radius:16px;padding:15px;margin-bottom:15px}#cameraSettings{margin:12px 0;padding:12px;background:#1c304b;border-radius:10px}#cameraSettings select{width:100%;padding:10px;border-radius:8px;border:1px solid #456383;background:#101a2a;color:#fff}#cameraSettings .mic-toggle{display:flex;align-items:center;gap:8px}#cameraSettings .mic-toggle input{width:20px;height:20px}.auto-panel h2{margin:0 0 5px;font-size:19px}.auto-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.auto-actions button{flex:1;min-width:140px}.auto-panel input{display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #456383;border-radius:9px;background:#101a2a;color:white;font-size:16px;margin:10px 0}.auto-panel a{color:#9acaff;overflow-wrap:anywhere}.auto-panel .mini{font-size:12px;color:#b6c3d8}.auto-panel video{margin-top:10px}details{margin:12px 0}summary{cursor:pointer;color:#b6d9ff}
 .remote-controls{border:1px solid #3a6081;border-radius:11px;background:#172b45;padding:12px;margin-top:12px}.remote-controls[hidden]{display:none}.remote-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.remote-controls select{display:block;width:100%;background:#101a2a;color:#fff;padding:9px;border:1px solid #456383;border-radius:7px}.remote-controls .mic-toggle{display:flex;gap:8px;align-items:center}.remote-controls .mic-toggle input{width:20px;height:20px}.remote-controls [hidden]{display:none!important}#remoteZoom{width:100%;accent-color:#58a7ee}#remoteZoomValue{font-variant-numeric:tabular-nums}#videoPanSurface{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:10px}#videoPanSurface video{width:100%;height:100%;aspect-ratio:auto;object-fit:contain;transform-origin:center center;will-change:transform}#videoPanSurface.targeting{touch-action:none;cursor:crosshair}#videoPanSurface.targeting video{pointer-events:none}#targetIndicator{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:36px;color:#8ed7ff;pointer-events:none;text-shadow:0 0 4px #000}#targetIndicator[hidden]{display:none}#digitalPanControls{background:#172b45;border:1px solid #3a6081;border-radius:10px;padding:12px;margin:10px 0}#digitalZoom{width:100%;accent-color:#58a7ee}#digitalPanControls label{margin-top:0}#digitalPanControls .mini{margin-bottom:0}#videoPanSurface:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0}body.pocket-cinema #videoPanSurface{height:calc(100dvh - 58px);aspect-ratio:auto}body.pocket-cinema #digitalPanControls{display:none}.viewer-stats{padding:8px 10px;background:#17283e;border:1px solid #354e69;border-radius:8px;margin-top:8px;font-size:12px;color:#c2d9ef;font-variant-numeric:tabular-nums}#autoVideo.viewer-fill{object-fit:cover}#autoVideo:fullscreen{width:100vw;height:100vh;object-fit:contain;border-radius:0;background:#000}#autoVideo.viewer-fill:fullscreen{object-fit:cover}body.pocket-cinema{max-width:none;padding:0;background:#000}body.pocket-cinema>header,body.pocket-cinema>nav,body.pocket-cinema>details,body.pocket-cinema>#status,body.pocket-cinema>p{display:none}body.pocket-cinema #autoPanel{border:0;border-radius:0;padding:8px;background:#000}body.pocket-cinema #autoPanel>h2,body.pocket-cinema #autoPanel>p,body.pocket-cinema #autoPanel>.auto-actions,body.pocket-cinema #autoWatch>label,body.pocket-cinema #autoWatch>input,body.pocket-cinema #autoWatch>.auto-actions:first-of-type{display:none}body.pocket-cinema #autoVideo{height:calc(100dvh - 58px);aspect-ratio:auto;width:100%;object-fit:contain}body.pocket-cinema #autoVideo.viewer-fill{object-fit:cover}body.pocket-cinema #autoWatch>.auto-actions:last-of-type{justify-content:center;margin:5px 0}
@@ -14,7 +14,7 @@
 <div id="digitalPanControls"><label for="digitalZoom">Digital crop <span id="digitalZoomValue">1.0×</span></label><input id="digitalZoom" type="range" min="1" max="4" step="0.1" value="1"><div class="auto-actions"><button id="targetMode" type="button">◎ Tap / drag to position</button><button id="digitalReset" type="button">↺ Reset crop</button></div><p class="mini" id="digitalInfo">Camera zoom is transmitted. Digital crop and pan adjust this viewer's image; snapshots capture the selected region.</p></div><audio id="audioPlayer" autoplay playsinline></audio><p class="mini" id="soundStatus">Sound off until enabled. Turn on the broadcasting device microphone and tap Enable sound here.</p><div id="remoteControls" class="remote-controls" hidden><strong>Remote Camera</strong><div class="remote-grid"><label>Camera<select id="remoteFacing"><option value="environment">Rear</option><option value="user">Front</option></select></label><label>Resolution<select id="remoteResolution"><option value="720">720p</option><option value="480">480p</option><option value="1080">1080p</option></select></label></div><label class="mic-toggle"><input type="checkbox" id="remoteMic"> Broadcast microphone</label>
 <div id="remoteZoomWrap" hidden><label for="remoteZoom">Camera zoom <span id="remoteZoomValue">1.0×</span></label><input type="range" id="remoteZoom" min="1" max="1" value="1" step="0.1"><p class="mini">Optical/digital zoom depends on device.</p></div>
 <label id="remoteTorchWrap" class="mic-toggle" hidden><input type="checkbox" id="remoteTorch"> Camera torch</label>
-<p class="mini" id="remoteCapabilityInfo">Checking camera capabilities…</p><p class="mini" id="remoteStatus">Controls available after viewer approval.</p></div><div id="autoStats" class="viewer-stats" aria-live="off">Awaiting stream…</div><div class="auto-actions"><button id="autoFullscreen">⛶ Fullscreen viewer</button><button id="autoFit">↔ Fit: Contain</button><button id="autoDisconnect">Disconnect viewer</button><button id="autoReconnect">↻ Reconnect</button><button id="autoSound">🔊 Enable sound</button><button id="autoSnapshot">📸 Save snapshot</button><button id="autoStatsToggle">📊 Statistics: On</button></div></div>
+<p class="mini" id="remoteCapabilityInfo">Checking camera capabilities…</p><p class="mini" id="remoteStatus">Controls available after viewer approval.</p></div><div id="autoStats" class="viewer-stats" aria-live="off">Awaiting stream…</div><div id="benchmarkPanel" class="viewer-stats"><strong>Connection benchmark</strong><div id="benchmarkSummary">Start a stream to collect connection measurements.</div><div class="auto-actions"><button id="benchmarkCopy">Copy report</button><button id="benchmarkReset">Reset measurements</button></div><p class="mini">Samples update every 1.5 seconds while video is connected. Values depend on browser WebRTC statistics support; unavailable values are shown as N/A.</p></div><div class="auto-actions"><button id="autoFullscreen">⛶ Fullscreen viewer</button><button id="autoFit">↔ Fit: Contain</button><button id="autoDisconnect">Disconnect viewer</button><button id="autoReconnect">↻ Reconnect</button><button id="autoSound">🔊 Enable sound</button><button id="autoSnapshot">📸 Save snapshot</button><button id="autoStatsToggle">📊 Statistics: On</button></div></div>
 <div class="auto-actions"><button id="autoViewerMode">👁️ Watch a camera</button></div><p class="mini" id="autoStatus">Quick Pair uses the free public PeerJS signalling service and Google STUN; video is direct peer-to-peer where possible. No TURN relay is configured, so some networks won't connect. The private link is your access key; don't share it publicly.</p></div>
 <details><summary>Manual pairing fallback (v0.1)</summary><div id="manualContainer"></div></details><nav><button class="active" id="camTab">📷 Broadcast camera</button><button id="viewTab">👁️ Watch camera</button></nav>
 <section id="cam"><video id="preview" autoplay muted playsinline></video><div class="controls"><button class="primary" id="start">1. Start camera</button><button id="stop">Stop</button></div><label>2. Copy camera offer to PC</label><textarea id="offerOut" readonly placeholder="Offer will appear here"></textarea><div class="controls"><button id="copyOffer">Copy offer</button></div><label>4. Paste viewer answer from PC</label><textarea id="answerIn" placeholder="Paste the viewer answer here"></textarea><div class="controls"><button class="primary" id="connect">5. Connect</button></div></section>
@@ -261,24 +261,80 @@ const statsEl=el('autoStats');
 const soundInfo=()=>{const tracks=el('audioPlayer').srcObject?.getAudioTracks()||[];el('soundStatus').textContent=tracks.length?(soundEnabled?'Microphone track received · sound enabled':'Microphone track received · tap Enable sound'):'No microphone track received. On the broadcasting device, enable Include microphone audio before broadcast or toggle it while connected.';};
 const applySound=async()=>{const video=el('audioPlayer');video.muted=!soundEnabled;video.volume=1;el('autoSound').textContent=soundEnabled?'🔇 Mute sound':'🔊 Enable sound';soundInfo();if(soundEnabled&&video.srcObject){try{await video.play();tell('Audio playback enabled.');}catch(e){tell('Playback blocked: tap the video Play control. '+e.message);}}};
 el('autoSound').onclick=()=>{soundEnabled=!soundEnabled;applySound();};
+const benchmark={started:null,samples:[],lastBytes:null,lastStamp:null,lastPackets:null,lastLost:null};
+const resetBenchmark=()=>{
+benchmark.started=null;benchmark.samples=[];benchmark.lastBytes=null;benchmark.lastStamp=null;benchmark.lastPackets=null;benchmark.lastLost=null;
+el('benchmarkSummary').textContent='Awaiting measurements…';
+};
+const statNumber=n=>typeof n==='number'&&Number.isFinite(n)?n:null;
+const formatNumber=(n,d=0)=>n===null?'N/A':n.toFixed(d);
+const benchmarkReport=()=>{
+const a=benchmark.samples, numerical=k=>a.map(x=>x[k]).filter(x=>x!==null&&Number.isFinite(x));
+const avg=k=>{const vals=numerical(k);return vals.length?vals.reduce((x,y)=>x+y,0)/vals.length:null;};
+const min=k=>{const vals=numerical(k);return vals.length?Math.min(...vals):null;};
+const max=k=>{const vals=numerical(k);return vals.length?Math.max(...vals):null;};
+return {app:'Pocket-Cam',release:'v0.10.0',captured:new Date().toISOString(),sessionStarted:benchmark.started,device:navigator.userAgent,sampleCount:a.length,durationSeconds:a.length>1?Math.round((a[a.length-1].time-a[0].time)/1000):0,videoResolution:a.length?a[a.length-1].resolution:'N/A',connectionState:a.length?a[a.length-1].connection:'N/A',avgFps:avg('fps'),minFps:min('fps'),avgKbps:avg('kbps'),minKbps:min('kbps'),maxKbps:max('kbps'),avgRoundTripMs:avg('rtt'),avgJitterMs:avg('jitter'),avgPacketLossPercent:avg('loss'),samples:a};
+};
+const renderBenchmark=()=>{
+const b=benchmarkReport();
+el('benchmarkSummary').textContent=b.sampleCount?
+'Samples: '+b.sampleCount+' · '+b.durationSeconds+' s · FPS avg/min '+formatNumber(b.avgFps,1)+' / '+formatNumber(b.minFps,1)+' · bitrate avg '+formatNumber(b.avgKbps)+' kbps · RTT avg '+formatNumber(b.avgRoundTripMs)+' ms · loss avg '+formatNumber(b.avgPacketLossPercent,2)+'%':
+'Awaiting measurements…';
+};
 const stopStats=()=>{if(statsTimer){clearInterval(statsTimer);statsTimer=null;}lastBytes=null;lastTime=null;};
 const updateStats=async()=>{
-const v=el('autoVideo'), track=v.srcObject?.getVideoTracks()?.[0], settings=track?.getSettings?.()||{};
-let parts=[v.videoWidth&&v.videoHeight?'Video '+v.videoWidth+'×'+v.videoHeight:'Video: waiting'];
+const v=el('autoVideo'),track=v.srcObject?.getVideoTracks()?.[0],settings=track?.getSettings?.()||{};
+const resolution=v.videoWidth&&v.videoHeight?v.videoWidth+'×'+v.videoHeight:'N/A';
+const sample={time:Date.now(),resolution,connection:'N/A',fps:null,kbps:null,rtt:null,jitter:null,loss:null};
 if(activeCall?.peerConnection){
 const pc=activeCall.peerConnection;
-parts.push('Connection: '+pc.connectionState);
+sample.connection=pc.connectionState||'unknown';
 try{
-const report=await pc.getStats();let inbound;
-report.forEach(s=>{if(s.type==='inbound-rtp'&&(s.kind==='video'||s.mediaType==='video'))inbound=s;});
-if(inbound){if(Number.isFinite(inbound.framesPerSecond))parts.push(Math.round(inbound.framesPerSecond)+' fps');if(Number.isFinite(inbound.bytesReceived)){if(lastTime!==null&&lastBytes!==null&&inbound.timestamp>lastTime){const kbps=Math.round(8*(inbound.bytesReceived-lastBytes)/(inbound.timestamp-lastTime));if(kbps>=0)parts.push(kbps+' kbps');}lastBytes=inbound.bytesReceived;lastTime=inbound.timestamp;}}
-}catch(e){parts.push('Stats unavailable');}
+const report=await pc.getStats();let inbound=null,pair=null,transport=null;
+report.forEach(s=>{
+if(s.type==='inbound-rtp'&&(s.kind==='video'||s.mediaType==='video'))inbound=s;
+if(s.type==='candidate-pair'&&s.state==='succeeded'&&s.nominated)pair=s;
+if(s.type==='transport')transport=s;
+});
+if(!pair&&transport?.selectedCandidatePairId)pair=report.get(transport.selectedCandidatePairId);
+if(inbound){
+sample.fps=statNumber(inbound.framesPerSecond);
+if(sample.fps===null)sample.fps=statNumber(settings.frameRate);
+sample.jitter=statNumber(inbound.jitter)!==null?inbound.jitter*1000:null;
+const received=statNumber(inbound.packetsReceived),lost=statNumber(inbound.packetsLost);
+if(received!==null&&lost!==null&&benchmark.lastPackets!==null&&benchmark.lastLost!==null){
+const receivedDelta=received-benchmark.lastPackets,lostDelta=lost-benchmark.lastLost;
+if(receivedDelta>=0&&lostDelta>=0&&receivedDelta+lostDelta>0)sample.loss=100*lostDelta/(receivedDelta+lostDelta);
 }
-if(settings.frameRate&&!parts.some(x=>x.includes('fps')))parts.push(Math.round(settings.frameRate)+' fps (track)');
+benchmark.lastPackets=received;benchmark.lastLost=lost;
+const bytes=statNumber(inbound.bytesReceived),stamp=statNumber(inbound.timestamp);
+if(bytes!==null&&stamp!==null&&benchmark.lastBytes!==null&&benchmark.lastStamp!==null&&stamp>benchmark.lastStamp){
+const delta=bytes-benchmark.lastBytes;
+if(delta>=0)sample.kbps=8*delta/(stamp-benchmark.lastStamp);
+}
+benchmark.lastBytes=bytes;benchmark.lastStamp=stamp;
+}
+if(pair)sample.rtt=statNumber(pair.currentRoundTripTime)!==null?pair.currentRoundTripTime*1000:null;
+}catch(e){sample.connection+=' (stats unavailable)';}
+}
+if(sample.fps===null)sample.fps=statNumber(settings.frameRate);
+const parts=['Video '+resolution,'Connection: '+sample.connection,'FPS '+formatNumber(sample.fps,1),'Receive '+formatNumber(sample.kbps)+' kbps','RTT '+formatNumber(sample.rtt)+' ms','Jitter '+formatNumber(sample.jitter,1)+' ms','Loss '+formatNumber(sample.loss,2)+'%'];
 if(statsEnabled)statsEl.textContent=parts.join(' · ');
+if(v.srcObject&&resolution!=='N/A'){
+if(!benchmark.started)benchmark.started=new Date().toISOString();
+benchmark.samples.push(sample);
+if(benchmark.samples.length>400)benchmark.samples.shift();
+renderBenchmark();
+}
 };
-const startStats=()=>{stopStats();if(statsEnabled){statsEl.hidden=false;updateStats();statsTimer=setInterval(updateStats,1500);}};
-el('autoStatsToggle').onclick=()=>{statsEnabled=!statsEnabled;el('autoStatsToggle').textContent='📊 Statistics: '+(statsEnabled?'On':'Off');statsEl.hidden=!statsEnabled;if(statsEnabled)startStats();else stopStats();};
+const startStats=()=>{stopStats();resetBenchmark();statsEl.hidden=!statsEnabled;updateStats();statsTimer=setInterval(updateStats,1500);};
+el('autoStatsToggle').onclick=()=>{statsEnabled=!statsEnabled;el('autoStatsToggle').textContent='📊 Statistics: '+(statsEnabled?'On':'Off');statsEl.hidden=!statsEnabled;};
+el('benchmarkReset').onclick=resetBenchmark;
+el('benchmarkCopy').onclick=async()=>{
+const payload=JSON.stringify(benchmarkReport(),null,2);
+try{await navigator.clipboard.writeText(payload);tell('Benchmark report copied to clipboard.');}
+catch(e){const blob=new Blob([payload],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Pocket-Cam-benchmark-'+Date.now()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);tell('Clipboard unavailable; downloaded benchmark JSON instead.');}
+};
 el('autoSnapshot').onclick=()=>{
 const v=el('autoVideo');
 if(!v.videoWidth||!v.videoHeight){tell('Snapshot unavailable until live video arrives.');return;}
