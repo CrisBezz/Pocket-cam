@@ -154,7 +154,7 @@ if(await changeCamera()!==true){el('camQuality').value=old;el('camResolution').v
 await applyVideoBitrate();
 reportRemoteState(approvedViewer);
 };
-el('camQuality').onchange=async()=>{try{await setQualityPreset(el('camQuality').value);}catch(e){tell('Quality preset failed: '+e.message);}};
+el('camQuality').onchange=async()=>{try{await setQualityPreset(el('camQuality').value);}catch(e){el('camQuality').value='custom';el('camResolution').value=camera?.getVideoTracks()[0]?.getSettings?.().height===1080?'1080':camera?.getVideoTracks()[0]?.getSettings?.().height===480?'480':'720';tell('Quality preset failed: '+e.message);}};
 const reportRemoteState=conn=>{
 if(!conn?.open||conn!==approvedViewer)return;
 conn.send({type:'pocket-camera-state',facing:el('camFacing').value,resolution:el('camResolution').value,microphone:camera?.getAudioTracks().some(t=>t.readyState==='live')||false,capabilities:captureCapabilities(),quality:{...qualityState,preset:el('camQuality').value}});
@@ -202,7 +202,7 @@ finally{el('camMic').disabled=false;}
 };
 const cancelRetries=()=>{if(reconnectTimer){clearTimeout(reconnectTimer);reconnectTimer=null;}retryCount=0;};
 const clearApproval=()=>{pendingViewer=null;approvedViewer=null;approvedViewerToken=null;el('approvalBox').hidden=true;};
-const clean=()=>{el('remoteControls').hidden=true;guard(false);releaseWake();clearApproval();viewerEpoch++;cancelRetries();viewerTarget=null;if(typeof stopStats==='function')stopStats();document.body.classList.remove('pocket-cinema');if(activeCall){activeCall.close();activeCall=null;}if(micCall){micCall.close();micCall=null;}if(incomingAudioCall){incomingAudioCall.close();incomingAudioCall=null;}el('audioPlayer').srcObject=null;for(const c of cameraConnections){try{c.close()}catch{}}cameraConnections=[];if(viewerConnection){viewerConnection.close();viewerConnection=null;}if(peer){peer.destroy();peer=null;}if(camera){camera.getTracks().forEach(t=>t.stop());camera=null;}el('autoShare').hidden=true;el('autoVideo').srcObject=null;resetCrop();el('soundStatus').textContent='No microphone track received.';};
+const clean=()=>{viewerQualityInfo=null;el('remoteControls').hidden=true;guard(false);releaseWake();clearApproval();viewerEpoch++;cancelRetries();viewerTarget=null;if(typeof stopStats==='function')stopStats();document.body.classList.remove('pocket-cinema');if(activeCall){activeCall.close();activeCall=null;}if(micCall){micCall.close();micCall=null;}if(incomingAudioCall){incomingAudioCall.close();incomingAudioCall=null;}el('audioPlayer').srcObject=null;for(const c of cameraConnections){try{c.close()}catch{}}cameraConnections=[];if(viewerConnection){viewerConnection.close();viewerConnection=null;}if(peer){peer.destroy();peer=null;}if(camera){camera.getTracks().forEach(t=>t.stop());camera=null;}el('autoShare').hidden=true;el('autoVideo').srcObject=null;resetCrop();el('soundStatus').textContent='No microphone track received.';};
 const makePeer=(id)=>new window.Peer(id||undefined,{config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
 const watchUI=()=>{el('autoWatch').hidden=false;el('autoShare').hidden=true;};
 let viewerQualityInfo=null;
