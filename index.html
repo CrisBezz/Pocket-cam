@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.10.1</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pocket-Cam v0.10.2</title>
 <style>
 :root{font-family:system-ui,-apple-system,sans-serif;color-scheme:dark;background:#0d1420;color:#edf4ff}*{box-sizing:border-box}body{margin:auto;padding:20px;max-width:850px}header{margin-bottom:18px}h1{font-size:26px;margin:0}p{line-height:1.5;color:#b6c3d8}nav{display:flex;gap:10px;margin-bottom:14px}button{background:#263955;color:white;border:1px solid #506380;border-radius:10px;padding:11px 14px;font-weight:600;cursor:pointer}button.primary,nav button.active{background:#247fdb;border-color:#247fdb}nav button{flex:1}section{border-radius:16px;padding:15px;border:1px solid #344760;background:#182337}video{width:100%;aspect-ratio:16/9;object-fit:contain;background:black;border-radius:10px}label{display:block;margin:16px 0 6px;font-weight:600;font-size:13px}textarea{width:100%;height:108px;padding:9px;background:#101a2a;color:#e6f2ff;border:1px solid #3a5274;border-radius:8px;font-size:12px;resize:vertical}.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}#status{padding:12px;border-radius:9px;background:#253650;white-space:pre-wrap;margin-top:16px}.hidden{display:none}small{font-size:12px;color:#a4b3c9}
 #screenGuard{position:fixed;inset:0;background:#000;color:#9ca3af;z-index:100000;display:block;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;text-align:center;user-select:none;-webkit-user-select:none;scrollbar-width:none}#screenGuard::-webkit-scrollbar{display:none}#guardBlank{height:calc(100dvh + 100px);min-height:calc(100vh + 100px);background:#000}#guardBottom{min-height:70dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px 20px 100px;background:#000}#screenGuard[hidden]{display:none}#screenGuard .live{color:#f87171;font-size:13px;letter-spacing:0.15em}#screenGuard button{background:#131313;border:1px solid #3d3d3d;touch-action:none;min-width:185px}#guardProgress{color:#737373;font-size:12px}
-</style></head><body><header><h1>📷 Pocket-Cam <small>v0.10.1</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
+</style></head><body><header><h1>📷 Pocket-Cam <small>v0.10.2</small></h1><p>Any supported phone, tablet or computer can broadcast or view. Private peer-to-peer WebRTC streaming.</p></header>
 <style>
 .auto-panel{border:1px solid #247fdb;background:#12253e;border-radius:16px;padding:15px;margin-bottom:15px}#cameraSettings{margin:12px 0;padding:12px;background:#1c304b;border-radius:10px}#cameraSettings select{width:100%;padding:10px;border-radius:8px;border:1px solid #456383;background:#101a2a;color:#fff}#cameraSettings .mic-toggle{display:flex;align-items:center;gap:8px}#cameraSettings .mic-toggle input{width:20px;height:20px}.auto-panel h2{margin:0 0 5px;font-size:19px}.auto-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.auto-actions button{flex:1;min-width:140px}.auto-panel input{display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #456383;border-radius:9px;background:#101a2a;color:white;font-size:16px;margin:10px 0}.auto-panel a{color:#9acaff;overflow-wrap:anywhere}.auto-panel .mini{font-size:12px;color:#b6c3d8}.auto-panel video{margin-top:10px}details{margin:12px 0}summary{cursor:pointer;color:#b6d9ff}
 .remote-controls{border:1px solid #3a6081;border-radius:11px;background:#172b45;padding:12px;margin-top:12px}.remote-controls[hidden]{display:none}.remote-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.remote-controls select{display:block;width:100%;background:#101a2a;color:#fff;padding:9px;border:1px solid #456383;border-radius:7px}.remote-controls .mic-toggle{display:flex;gap:8px;align-items:center}.remote-controls .mic-toggle input{width:20px;height:20px}.remote-controls [hidden]{display:none!important}#remoteZoom{width:100%;accent-color:#58a7ee}#remoteZoomValue{font-variant-numeric:tabular-nums}#videoPanSurface{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:10px}#videoPanSurface video{width:100%;height:100%;aspect-ratio:auto;object-fit:contain;transform-origin:center center;will-change:transform}#videoPanSurface.targeting{touch-action:none;cursor:crosshair}#videoPanSurface.targeting video{pointer-events:none}#targetIndicator{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:36px;color:#8ed7ff;pointer-events:none;text-shadow:0 0 4px #000}#targetIndicator[hidden]{display:none}#digitalPanControls{background:#172b45;border:1px solid #3a6081;border-radius:10px;padding:12px;margin:10px 0}#digitalZoom{width:100%;accent-color:#58a7ee}#digitalPanControls label{margin-top:0}#digitalPanControls .mini{margin-bottom:0}#videoPanSurface:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0}body.pocket-cinema #videoPanSurface{height:calc(100dvh - 58px);aspect-ratio:auto}body.pocket-cinema #digitalPanControls{display:none}.viewer-stats{padding:8px 10px;background:#17283e;border:1px solid #354e69;border-radius:8px;margin-top:8px;font-size:12px;color:#c2d9ef;font-variant-numeric:tabular-nums}#autoVideo.viewer-fill{object-fit:cover}#autoVideo:fullscreen{width:100vw;height:100vh;object-fit:contain;border-radius:0;background:#000}#autoVideo.viewer-fill:fullscreen{object-fit:cover}body.pocket-cinema{max-width:none;padding:0;background:#000}body.pocket-cinema>header,body.pocket-cinema>nav,body.pocket-cinema>details,body.pocket-cinema>#status,body.pocket-cinema>p{display:none}body.pocket-cinema #autoPanel{border:0;border-radius:0;padding:8px;background:#000}body.pocket-cinema #autoPanel>h2,body.pocket-cinema #autoPanel>p,body.pocket-cinema #autoPanel>.auto-actions,body.pocket-cinema #autoWatch>label,body.pocket-cinema #autoWatch>input,body.pocket-cinema #autoWatch>.auto-actions:first-of-type{display:none}body.pocket-cinema #autoVideo{height:calc(100dvh - 58px);aspect-ratio:auto;width:100%;object-fit:contain}body.pocket-cinema #autoVideo.viewer-fill{object-fit:cover}body.pocket-cinema #autoWatch>.auto-actions:last-of-type{justify-content:center;margin:5px 0}
 </style><div class="auto-panel" id="autoPanel"><h2>Quick Pair · Experimental</h2><p>No offer/answer copying. Start on the broadcasting device, then open its private viewer link on another device.</p>
-<div class="auto-actions"><button class="primary" id="autoStart">📷 Broadcast camera & create link</button><button id="autoStop">Stop broadcast</button><button id="guardButton">🔒 Black screen / lock controls</button></div>
+<div class="auto-actions"><button class="primary" id="autoStart">📷 Broadcast camera & create link</button><button id="autoStop">Stop broadcast</button><button id="guardButton">🔒 Black screen / lock controls</button></div><p class="mini" id="broadcasterWakeStatus" role="status">Screen wake lock: Inactive</p>
 <div id="cameraSettings"><label for="camQuality">Stream quality preset</label><select id="camQuality"><option value="balanced">Balanced · 720p / 1.5 Mbps</option><option value="saver">Data Saver · 480p / 750 kbps</option><option value="high">High Quality · 1080p / 3 Mbps</option><option value="custom">Custom · manual resolution</option></select><p class="mini" id="qualityDiagnostic">Preset bitrate targets are experimental and depend on browser support.</p><label for="camFacing">Camera</label><select id="camFacing"><option value="environment">Rear</option><option value="user">Front</option></select><label for="camResolution">Resolution (requested)</label><select id="camResolution"><option value="720">720p</option><option value="480">480p</option><option value="1080">1080p</option></select><label class="mic-toggle"><input type="checkbox" id="camMic"> Include microphone audio (requires permission)</label><p class="mini" id="micDiagnostic" role="status">Microphone off. Tick to request microphone access when broadcasting.</p><p class="mini" id="cameraInfo">Applies when broadcasting starts; camera and resolution can also change live.</p></div><div id="approvalBox" hidden style="border:1px solid #d1a44a;border-radius:10px;padding:12px;margin:10px 0;background:#392e1c"><strong>Viewer requests access</strong><p id="approvalText">A viewer wants to connect.</p><div class="auto-actions"><button id="approveViewer" class="primary">Approve viewer</button><button id="denyViewer">Deny</button></div></div><div id="autoShare" hidden><label>Viewer link (treat as private)</label><input id="autoLink" readonly><div class="auto-actions"><button id="autoCopy">Copy viewer link</button><button id="autoShareButton">Share link</button></div></div>
 <div id="autoWatch" hidden><label>Open a viewer link or paste it here</label><input id="autoWatchInput" placeholder="Paste complete link or camera ID"><div class="auto-actions"><button class="primary" id="autoJoin">▶ Watch camera</button></div><div id="videoPanSurface"><video id="autoVideo" autoplay playsinline controls></video><div id="targetIndicator" hidden>+</div></div>
-<div id="digitalPanControls"><label for="digitalZoom">Digital crop <span id="digitalZoomValue">1.0×</span></label><input id="digitalZoom" type="range" min="1" max="4" step="0.1" value="1"><div class="auto-actions"><button id="targetMode" type="button">◎ Tap / drag to position</button><button id="digitalReset" type="button">↺ Reset crop</button></div><p class="mini" id="digitalInfo">Camera zoom is transmitted. Digital crop and pan adjust this viewer's image; snapshots capture the selected region.</p></div><audio id="audioPlayer" autoplay playsinline></audio><p class="mini" id="soundStatus">Sound off until enabled. Turn on the broadcasting device microphone and tap Enable sound here.</p><div id="remoteControls" class="remote-controls" hidden><strong>Remote Camera</strong><label for="remoteQuality">Quality preset</label><select id="remoteQuality"><option value="balanced">Balanced · 720p / 1.5 Mbps</option><option value="saver">Data Saver · 480p / 750 kbps</option><option value="high">High Quality · 1080p / 3 Mbps</option><option value="custom">Custom · manual resolution</option></select><p class="mini" id="remoteQualityState">Waiting for sender report…</p><div class="remote-grid"><label>Camera<select id="remoteFacing"><option value="environment">Rear</option><option value="user">Front</option></select></label><label>Resolution<select id="remoteResolution"><option value="720">720p</option><option value="480">480p</option><option value="1080">1080p</option></select></label></div><label class="mic-toggle"><input type="checkbox" id="remoteMic"> Broadcast microphone</label>
+<div id="digitalPanControls"><label for="digitalZoom">Digital crop <span id="digitalZoomValue">1.0×</span></label><input id="digitalZoom" type="range" min="1" max="4" step="0.1" value="1"><div class="auto-actions"><button id="targetMode" type="button">◎ Tap / drag to position</button><button id="digitalReset" type="button">↺ Reset crop</button></div><p class="mini" id="digitalInfo">Camera zoom is transmitted. Digital crop and pan adjust this viewer's image; snapshots capture the selected region.</p></div><audio id="audioPlayer" autoplay playsinline></audio><p class="mini" id="soundStatus">Sound off until enabled. Turn on the broadcasting device microphone and tap Enable sound here.</p><div id="remoteControls" class="remote-controls" hidden><strong>Remote Camera</strong><label for="remoteQuality">Quality preset</label><select id="remoteQuality"><option value="balanced">Balanced · 720p / 1.5 Mbps</option><option value="saver">Data Saver · 480p / 750 kbps</option><option value="high">High Quality · 1080p / 3 Mbps</option><option value="custom">Custom · manual resolution</option></select><p class="mini" id="remoteQualityState">Waiting for sender report…</p><p class="mini" id="remoteWakeStatus" role="status">Broadcaster wake lock: Awaiting report</p><div class="remote-grid"><label>Camera<select id="remoteFacing"><option value="environment">Rear</option><option value="user">Front</option></select></label><label>Resolution<select id="remoteResolution"><option value="720">720p</option><option value="480">480p</option><option value="1080">1080p</option></select></label></div><label class="mic-toggle"><input type="checkbox" id="remoteMic"> Broadcast microphone</label>
 <div id="remoteZoomWrap" hidden><label for="remoteZoom">Camera zoom <span id="remoteZoomValue">1.0×</span></label><input type="range" id="remoteZoom" min="1" max="1" value="1" step="0.1"><p class="mini">Optical/digital zoom depends on device.</p></div>
 <label id="remoteTorchWrap" class="mic-toggle" hidden><input type="checkbox" id="remoteTorch"> Camera torch</label>
 <p class="mini" id="remoteCapabilityInfo">Checking camera capabilities…</p><p class="mini" id="remoteStatus">Controls available after viewer approval.</p></div><div id="autoStats" class="viewer-stats" aria-live="off">Awaiting stream…</div><div id="benchmarkPanel" class="viewer-stats"><strong>Connection benchmark</strong><div id="benchmarkSummary">Start a stream to collect connection measurements.</div><div class="auto-actions"><button id="benchmarkCopy">Copy report</button><button id="benchmarkReset">Reset measurements</button></div><p class="mini">Samples update every 1.5 seconds while video is connected. Values depend on browser WebRTC statistics support; unavailable values are shown as N/A.</p></div><div class="auto-actions"><button id="autoFullscreen">⛶ Fullscreen viewer</button><button id="autoFit">↔ Fit: Contain</button><button id="autoDisconnect">Disconnect viewer</button><button id="autoReconnect">↻ Reconnect</button><button id="autoSound">🔊 Enable sound</button><button id="autoSnapshot">📸 Save snapshot</button><button id="autoStatsToggle">📊 Statistics: On</button></div></div>
@@ -76,12 +76,64 @@ guardFullscreen=false;
 }
 };
 document.addEventListener('fullscreenchange',()=>{if(document.fullscreenElement!==el('screenGuard'))guardFullscreen=false;});
+let wakeStatus='inactive',wakeReason='',wakeRequest=null,wakeRetryTimer=null,wakeRetries=0,wakeGeneration=0;
+const wakeText=()=>({active:'Active',requesting:'Requesting',released:'Released',retrying:'Retrying',unsupported:'Unsupported',unavailable:'Unavailable',inactive:'Inactive'})[wakeStatus]||wakeStatus;
+const publishWakeState=()=>{
+el('broadcasterWakeStatus').textContent='Screen wake lock: '+wakeText()+(wakeReason?' · '+wakeReason:'');
+if(approvedViewer?.open)approvedViewer.send({type:'pocket-wake-state',status:wakeStatus,reason:wakeReason,active:wakeStatus==='active'});
+};
+const setWakeState=(status,reason='')=>{wakeStatus=status;wakeReason=reason;publishWakeState();};
+const clearWakeTimer=()=>{if(wakeRetryTimer!==null){clearTimeout(wakeRetryTimer);wakeRetryTimer=null;}};
+const scheduleWakeRetry=()=>{
+clearWakeTimer();
+if(!wakeDesired||!camera||document.visibilityState!=='visible')return;
+const delay=Math.min(30000,1500*Math.pow(2,Math.min(wakeRetries++,4)));
+setWakeState('retrying','Next attempt in '+Math.round(delay/1000)+'s');
+wakeRetryTimer=setTimeout(()=>{wakeRetryTimer=null;requestWake();},delay);
+};
 async function requestWake(){
-if(!wakeDesired||document.visibilityState!=='visible'||wakeSentinel||!navigator.wakeLock)return;
-try{wakeSentinel=await navigator.wakeLock.request('screen');wakeSentinel.addEventListener('release',()=>{wakeSentinel=null;});}catch(e){tell('Screen wake lock unavailable: '+(e.message||e.name));}
+if(!wakeDesired||!camera||document.visibilityState!=='visible'||wakeSentinel&&!wakeSentinel.released||wakeRequest)return;
+if(!navigator.wakeLock?.request){setWakeState('unsupported','This browser does not expose Screen Wake Lock');return;}
+clearWakeTimer();
+const generation=wakeGeneration;
+setWakeState('requesting');
+wakeRequest=(async()=>{
+try{
+const sentinel=await navigator.wakeLock.request('screen');
+if(generation!==wakeGeneration||!wakeDesired||!camera){
+await sentinel.release().catch(()=>{});
+return;
 }
-function releaseWake(){wakeDesired=false;if(wakeSentinel){const w=wakeSentinel;wakeSentinel=null;w.release().catch(()=>{});}}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&wakeDesired)requestWake();});
+wakeSentinel=sentinel;wakeRetries=0;
+setWakeState('active');
+sentinel.addEventListener('release',()=>{
+if(wakeSentinel!==sentinel)return;
+wakeSentinel=null;
+if(!wakeDesired)return;
+if(document.visibilityState!=='visible'){setWakeState('released','Page not visible');return;}
+setWakeState('released','Wake lock released by system');
+scheduleWakeRetry();
+});
+}catch(e){
+if(generation!==wakeGeneration||!wakeDesired)return;
+setWakeState('unavailable',e.message||e.name||'Request failed');
+scheduleWakeRetry();
+}
+})().finally(()=>{if(generation===wakeGeneration)wakeRequest=null;});
+await wakeRequest;
+}
+function releaseWake(){
+wakeDesired=false;wakeGeneration++;clearWakeTimer();wakeRetries=0;wakeRequest=null;
+const sentinel=wakeSentinel;wakeSentinel=null;
+if(sentinel)sentinel.release().catch(()=>{});
+setWakeState('inactive');
+}
+document.addEventListener('visibilitychange',()=>{
+if(!wakeDesired)return;
+if(document.visibilityState==='visible'){wakeRetries=0;requestWake();}
+else setWakeState('released','Page hidden; will request again when visible');
+});
+window.addEventListener('pageshow',()=>{if(wakeDesired&&document.visibilityState==='visible')requestWake();});
 el('guardButton').onclick=()=>{
 if(!camera){tell('Start a camera broadcast before locking controls.');return;}
 guard(true);requestWake();
@@ -157,7 +209,7 @@ reportRemoteState(approvedViewer);
 el('camQuality').onchange=async()=>{try{await setQualityPreset(el('camQuality').value);}catch(e){el('camQuality').value='custom';el('camResolution').value=camera?.getVideoTracks()[0]?.getSettings?.().height===1080?'1080':camera?.getVideoTracks()[0]?.getSettings?.().height===480?'480':'720';tell('Quality preset failed: '+e.message);}};
 const reportRemoteState=conn=>{
 if(!conn?.open||conn!==approvedViewer)return;
-conn.send({type:'pocket-camera-state',facing:el('camFacing').value,resolution:el('camResolution').value,microphone:camera?.getAudioTracks().some(t=>t.readyState==='live')||false,capabilities:captureCapabilities(),quality:{...qualityState,preset:el('camQuality').value}});
+conn.send({type:'pocket-camera-state',facing:el('camFacing').value,resolution:el('camResolution').value,microphone:camera?.getAudioTracks().some(t=>t.readyState==='live')||false,capabilities:captureCapabilities(),quality:{...qualityState,preset:el('camQuality').value},wake:{status:wakeStatus,reason:wakeReason,active:wakeStatus==='active'}});
 };
 const videoConstraints=()=>{const height=Number(el('camResolution').value);return {facingMode:{ideal:el('camFacing').value},width:{ideal:Math.round(height*16/9)},height:{ideal:height}};};
 const cameraReport=()=>{if(!camera)return;const t=camera.getVideoTracks()[0];if(t){const s=t.getSettings();el('cameraInfo').textContent='Active: '+(s.width||'?')+'×'+(s.height||'?')+' · '+(s.facingMode||'camera')+(camera.getAudioTracks().length?' · microphone on':' · microphone off');}};
@@ -206,9 +258,10 @@ const clean=()=>{viewerQualityInfo=null;el('remoteControls').hidden=true;guard(f
 const makePeer=(id)=>new window.Peer(id||undefined,{config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
 const watchUI=()=>{el('autoWatch').hidden=false;el('autoShare').hidden=true;};
 let viewerQualityInfo=null;
+const renderViewerWake=data=>{el('remoteWakeStatus').textContent='Broadcaster wake lock: '+(data?.status==='active'?'Active':data?.status==='requesting'?'Requesting':data?.status==='retrying'?'Retrying':data?.status==='released'?'Released':data?.status==='unsupported'?'Unsupported':data?.status==='unavailable'?'Unavailable':'Inactive')+(data?.reason?' · '+data.reason:'');};
 let remoteSeq=0;
 const remoteStatus=s=>el('remoteStatus').textContent=s;
-const remoteReady=on=>{el('remoteControls').hidden=!on;if(!on){el('remoteZoomWrap').hidden=true;el('remoteTorchWrap').hidden=true;el('remoteCapabilityInfo').textContent='Checking camera capabilities…';}};
+const remoteReady=on=>{el('remoteControls').hidden=!on;if(!on){renderViewerWake(null);el('remoteZoomWrap').hidden=true;el('remoteTorchWrap').hidden=true;el('remoteCapabilityInfo').textContent='Checking camera capabilities…';}};
 const sendRemote=(control,value)=>{
 if(!viewerConnection?.open||el('remoteControls').hidden){remoteStatus('Connect and get approved before using remote controls.');return;}
 const id=++remoteSeq;
@@ -413,7 +466,7 @@ micDiagnostic('Microphone captured: '+camera.getAudioTracks().length+' active au
 }
 cameraReport();
 el('preview').srcObject=camera;
-wakeDesired=true;requestWake();
+wakeDesired=true;wakeRetries=0;requestWake();
 peer=makePeer();
 peer.on('open',id=>{
 const u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('watch',id);
@@ -550,7 +603,9 @@ viewerConnection.on('data',data=>{
 if(epoch!==viewerEpoch||!data||typeof data!=='object')return;
 if(data.type==='pocket-pending')tell('Waiting for approval on the broadcasting device…');
 if(data.type==='pocket-approved'){remoteReady(true);tell(data.returning?'Recognised viewer. Resuming video without re-approval…':'Approved. Starting video…');}
+if(data.type==='pocket-wake-state')renderViewerWake(data);
 if(data.type==='pocket-camera-state'){
+if(data.wake)renderViewerWake(data.wake);
 el('remoteFacing').value=data.facing||'environment';
 el('remoteResolution').value=String(data.resolution||'720');
 el('remoteMic').checked=!!data.microphone;
